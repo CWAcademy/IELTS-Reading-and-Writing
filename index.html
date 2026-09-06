@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Reading &amp; Writing — Practice Test 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #faf8f3;
+    --paper: #fffdf9;
+    --ink: #1b2430;
+    --rule: #d9d4c6;
+    --accent: #7a2e2e;
+    --accent-soft: #f1e4e1;
+    --muted: #6b6459;
+    --success: #3f6e52;
+    --success-soft: #e7efe9;
+    --navh: 108px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+  }
+  h1,h2,h3{
+    font-family:'Lora',Georgia,serif;
+    font-weight:600;
+    margin:0 0 .4em 0;
+    color:var(--ink);
+  }
+  p{margin:0 0 1em 0;}
+
+  /* ===== TOP NAV ===== */
+  .topnav{
+    position:fixed;top:0;left:0;right:0;z-index:20;
+    background:rgba(250,248,243,.98);
+    border-bottom:2px solid var(--ink);
+    backdrop-filter:blur(6px);
+  }
+  .nav-row1{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 20px 8px;
+  }
+  .brand .kicker{font-size:12px;color:var(--accent);letter-spacing:.03em;}
+  .brand h1{font-size:19px;margin:0;}
+  .nav-actions{display:flex;align-items:center;gap:14px;}
+  .test-status{font-size:12.5px;color:var(--muted);white-space:nowrap;}
+  button#submitBtn{
+    background:var(--accent);color:#fff;border:none;
+    padding:9px 18px;font-size:13.5px;font-family:'Inter',sans-serif;
+    font-weight:600;border-radius:4px;cursor:pointer;white-space:nowrap;
+  }
+  button#submitBtn:hover{background:#5f2323;}
+  button#submitBtn:disabled{background:var(--muted);cursor:not-allowed;}
+
+  .tabs{
+    display:flex;gap:6px;padding:0 20px 10px;overflow-x:auto;
+  }
+  .tab{
+    border:1px solid var(--rule);background:#fff;color:var(--muted);
+    padding:7px 14px;border-radius:20px;font-size:13px;font-weight:600;
+    cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif;
+    transition:all .15s;
+  }
+  .tab:hover{border-color:var(--accent);color:var(--accent);}
+  .tab.active{background:var(--ink);border-color:var(--ink);color:#fff;}
+  .tab .dot{
+    display:inline-block;width:7px;height:7px;border-radius:50%;
+    background:var(--rule);margin-right:6px;position:relative;top:-1px;
+  }
+  .tab.done .dot{background:var(--success);}
+  .tab.active .dot{background:#fff;}
+
+  /* ===== MAIN / SPLIT PANES ===== */
+  main{margin-top:var(--navh);height:calc(100vh - var(--navh));}
+  .split{
+    display:none;
+    height:100%;
+    flex-direction:row;
+  }
+  .split.active{display:flex;}
+  .pane{
+    flex:1 1 50%;
+    min-width:0;
+    height:100%;
+    overflow-y:auto;
+    padding:28px 32px 90px;
+  }
+  .pane-left{
+    background:var(--paper);
+    border-right:2px solid var(--ink);
+  }
+  .pane-right{
+    background:var(--bg);
+  }
+  .pane-inner{max-width:640px;}
+  .pane-right .pane-inner{max-width:100%;}
+
+  .passage-title{
+    font-size:12.5px;color:var(--accent);letter-spacing:.03em;
+    text-transform:uppercase;margin-bottom:2px;
+  }
+  .passage-heading{font-size:22px;margin-bottom:16px;}
+  .para{margin-bottom:14px;font-size:15px;}
+  .para .plabel{
+    font-family:'Lora',serif;font-weight:700;color:var(--accent);
+    margin-right:8px;
+  }
+
+  .sec-head{
+    border-bottom:1px solid var(--ink);
+    padding-bottom:10px;margin-bottom:18px;
+  }
+  .sec-head h2{font-size:19px;}
+  .sec-head .range{font-size:12.5px;color:var(--muted);margin-top:2px;}
+
+  .instructions{
+    font-style:italic;color:var(--muted);font-size:13.5px;
+    margin-bottom:14px;line-height:1.55;
+  }
+  .instructions strong{color:var(--ink);font-style:normal;}
+
+  .qgroup{
+    background:var(--paper);border:1px solid var(--rule);border-radius:4px;
+    padding:16px 18px;margin-bottom:14px;
+  }
+  .qgroup h3{font-size:13.5px;color:var(--muted);font-weight:600;margin-bottom:12px;font-family:'Inter',sans-serif;}
+
+  .qline{display:flex;align-items:baseline;gap:10px;margin:11px 0;flex-wrap:wrap;}
+  .qnum{font-family:'Lora',serif;font-weight:700;color:var(--accent);min-width:22px;}
+  .qtext{flex:1;min-width:180px;font-size:14.5px;}
+  .qline input[type=text]{max-width:170px;display:inline-block;}
+
+  input[type=text]{
+    padding:7px 9px;border:1px solid var(--rule);border-radius:3px;
+    background:#fff;font-family:'Inter',sans-serif;font-size:13.5px;color:var(--ink);
+  }
+  input[type=text]:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent);}
+
+  select.qselect{
+    padding:6px 8px;border:1px solid var(--rule);border-radius:3px;
+    background:#fff;font-family:'Inter',sans-serif;font-size:13.5px;color:var(--ink);
+    cursor:pointer;min-width:90px;
+  }
+  select.qselect:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent);}
+  select.qselect.answered{border-color:var(--success);background:var(--success-soft);}
+
+  .options{display:flex;flex-direction:column;gap:7px;margin-top:4px;}
+  .option{
+    display:flex;align-items:flex-start;gap:9px;padding:7px 10px;
+    border:1px solid var(--rule);border-radius:3px;cursor:pointer;
+    font-size:13.5px;transition:border-color .15s, background .15s;
+  }
+  .option:hover{border-color:var(--accent);}
+  .option input{margin-top:3px;accent-color:var(--accent);}
+  .option.checked{background:var(--accent-soft);border-color:var(--accent);}
+
+  .heading-list{
+    background:var(--accent-soft);border:1px solid var(--rule);border-radius:4px;
+    padding:12px 14px;margin-bottom:14px;font-size:13px;
+  }
+  .heading-list div{padding:2px 0;}
+  .heading-list b{color:var(--accent);margin-right:6px;}
+
+  /* writing */
+  .prompt-box{
+    background:var(--accent-soft);border:1px solid var(--rule);border-radius:4px;
+    padding:16px 18px;margin-bottom:18px;font-size:14.5px;line-height:1.65;
+  }
+  .prompt-box em{color:var(--ink);}
+  .task-meta{font-size:12.5px;color:var(--muted);margin-bottom:16px;}
+  table.data-table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px;}
+  table.data-table th, table.data-table td{
+    border:1px solid var(--rule);padding:8px 10px;text-align:center;
+  }
+  table.data-table th{background:var(--paper);font-family:'Lora',serif;font-weight:600;}
+  table.data-table td:first-child, table.data-table th:first-child{text-align:left;}
+
+  textarea.essay{
+    width:100%;height:calc(100vh - var(--navh) - 170px);min-height:300px;
+    padding:16px 18px;border:1px solid var(--rule);border-radius:4px;
+    background:#fff;font-family:'Lora',Georgia,serif;font-size:15px;line-height:1.7;
+    color:var(--ink);resize:vertical;
+  }
+  textarea.essay:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent);}
+  .word-count{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:10px;font-size:12.5px;color:var(--muted);
+  }
+  .word-count .count.ok{color:var(--success);font-weight:600;}
+  .word-count .count.low{color:var(--accent);font-weight:600;}
+
+  /* status banner */
+  .status-banner{
+    position:fixed;left:0;right:0;bottom:0;z-index:30;
+    display:none;padding:14px 20px;font-size:13.5px;text-align:center;
+  }
+  .status-banner.ok{display:block;background:var(--success-soft);color:var(--success);border-top:1px solid var(--success);}
+  .status-banner.err{display:block;background:#f7e9e6;color:var(--accent);border-top:1px solid var(--accent);}
+
+  @media (max-width:820px){
+    :root{--navh:132px;}
+    .split{flex-direction:column;}
+    .pane{flex:none;height:46%;}
+    .pane-left{border-right:none;border-bottom:2px solid var(--ink);}
+    textarea.essay{height:38vh;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="nav-row1">
+    <div class="brand">
+      <div class="kicker">IELTS Academic — Practice Test 3</div>
+      <h1>Reading &amp; Writing Modules</h1>
+    </div>
+    <div class="nav-actions">
+      <div class="test-status" id="testStatus">0 / 40 reading answered</div>
+      <button id="submitBtn">Submit test</button>
+    </div>
+  </div>
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-target="r1"><span class="dot"></span>Reading 1</button>
+    <button class="tab" data-target="r2"><span class="dot"></span>Reading 2</button>
+    <button class="tab" data-target="r3"><span class="dot"></span>Reading 3</button>
+    <button class="tab" data-target="w1"><span class="dot"></span>Writing 1</button>
+    <button class="tab" data-target="w2"><span class="dot"></span>Writing 2</button>
+  </div>
+</div>
+
+<main>
+
+  <!-- ============ READING PASSAGE 1 ============ -->
+  <section class="split active" id="r1">
+    <div class="pane pane-left">
+      <div class="pane-inner">
+        <div class="passage-title">Reading Passage 1</div>
+        <div class="passage-heading">Synaesthesia</div>
+
+        <div class="para"><span class="plabel">A</span>Imagine a page with a square box in the middle. The box is lined with rows of the number 5, repeated over and over. All of the 5s are identical in size, font and colour, and equally distributed across the box. There is, however, a trick: among those 5s, hiding in plain sight is a single, capital letter S. Almost the same in shape, it is impossible to spot without straining your eyes for a good few minutes. Unless, that is, you are a grapheme–colour synaesthete — a person who sees each letter and number in different colours. With all the 5s painted in one colour and the rogue S painted in another, a grapheme–colour synaesthete will usually only need a split second to identify the latter.</div>
+
+        <div class="para"><span class="plabel">B</span>Synaesthesia, loosely translated as "senses coming together" from the Greek words syn ("with") and aesthesis ("sensation"), is an interesting neurological phenomenon that causes different senses to be combined. This might mean that words have a particular taste (for example, the word "door" might taste like bacon), or that certain smells produce a particular colour. It might also mean that each letter and number has its own personality — the letter A might be perky, the letter B might be shy and self-conscious, etc. Some synaesthetes might even experience other people's sensations, for example feeling pain in their chest when they witness a film character get shot. The possibilities are endless: even though synaesthesia is believed to affect less than 5% of the general population, at least 60 different combinations of senses have been reported so far. What all these sensory associations have in common is that they are all involuntary and impossible to repress, and that they usually remain quite stable over time.</div>
+
+        <div class="para"><span class="plabel">C</span>Synaesthesia was first documented in the early 19th century by German physician Georg Sachs, who dedicated two pages of his dissertation on his own experience with the condition. It wasn't, however, until the mid-1990s that empirical research proved its existence, when Professor Simon Baron-Cohen and his colleagues used fMRIs on six synaesthetes and discovered that the parts of the brain associated with vision were active during auditory stimulation, even though the subjects were blindfolded.</div>
+
+        <div class="para"><span class="plabel">D</span>What makes synaesthesia a particularly interesting condition is that it isn't an illness at all. If anything, synaesthetes often report feeling sorry for the rest of the population, as they don't have the opportunity to experience the world in a multisensory fashion like they do. Very few drawbacks have been described, usually minimal: for instance, some words might have an unpleasant taste (imagine the word "hello" tasting like spoilt milk), while some synaesthetes find it distressing when they encounter people with names which don't reflect their personality (imagine meeting a very interesting person named "Lee", when the letter E has a dull or hideous colour for you — or vice versa). Overall, however, synaesthesia is widely considered more of a blessing than a curse and it is often linked to intelligence and creativity, with celebrities such as Lady Gaga and Pharrell Williams claiming to have it.</div>
+
+        <div class="para"><span class="plabel">E</span>Another fascinating side of synaesthesia is the way it could potentially benefit future generations. In a 2013 study, Dr Witthoft and Dr Winawer discovered that grapheme–colour synaesthetes who had never met each other before experienced strikingly similar pairings between graphemes and colours — pairings which were later traced back to a popular set of Fischer-Price magnets that ten out of eleven participants distinctly remembered possessing as children. This was particularly peculiar as synaesthesia is predominantly considered to be a hereditary condition, and the findings suggested that a synaesthete's environment might play a determining role in establishing synaesthetic associations. If that was true, researchers asked, then might it not be possible that synaesthesia can actually be taught?</div>
+
+        <div class="para"><span class="plabel">F</span>As it turns out, the benefits of teaching synaesthesia would be tremendous. According to research conducted by Dr Clare Jonas at the University of East London, teaching people to create grapheme–colour associations the same way as a synaesthete may have the possibility to improve cognitive function and memory. As she put it, "one possibility is guarding against cognitive decline in older people — using synaesthesia in the creation of mnemonics to remember things such as shopping lists." To that end, researchers in the Netherlands have already begun developing a web browser plug-in that will change the colours of certain letters. Rothen and his colleagues corroborate the theory: in a paper published in 2011, they suggest that synaesthesia might be more than a hereditary condition, as the non-synaesthetic subjects of their study were able to mimic synaesthetic associations long after leaving the lab.</div>
+
+        <div class="para"><span class="plabel">G</span>There is obviously still a long way to go before we can fully understand synaesthesia and what causes it. Once we do, however, it might not be too long before we find out how to teach non-synaesthetes how to imitate its symptoms in a way that induces the same benefits 4.4% of the world's population currently enjoy.</div>
+      </div>
+    </div>
+
+    <div class="pane pane-right">
+      <div class="pane-inner">
+        <div class="sec-head">
+          <h2>Reading Passage 1 — Questions</h2>
+          <div class="range">Questions 1–14</div>
+        </div>
+
+        <div class="instructions"><strong>Questions 1–7.</strong> The reading passage has 7 paragraphs, A–G. Which paragraph contains the following information? Choose the correct letter, A–G, for each question.</div>
+        <div class="qgroup" id="qg-1-7"></div>
+
+        <div class="instructions"><strong>Questions 8–11.</strong> Do the following statements agree with the information given in Reading Passage 1?</div>
+        <div class="qgroup" id="qg-8-11"></div>
+
+        <div class="instructions"><strong>Questions 12–14.</strong> Complete the summary. Choose <strong>ONE WORD ONLY</strong> from the passage for each answer.</div>
+        <div class="qgroup">
+          <div class="qline"><span class="qtext">Synaesthesia is a unique neurological condition that causes different senses to get mixed. Recent research has suggested that teaching synaesthesia to non-synaesthetes can enhance <span class="qnum">12</span><input type="text" data-q="12"> and guard against the deterioration of cognitive <span class="qnum">13</span><input type="text" data-q="13">; unfortunately, it might be a while before we come up with a beneficial way to <span class="qnum">14</span><input type="text" data-q="14"> it to the general population.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ READING PASSAGE 2 ============ -->
+  <section class="split" id="r2">
+    <div class="pane pane-left">
+      <div class="pane-inner">
+        <div class="passage-title">Reading Passage 2</div>
+        <div class="passage-heading">The Taman Shud Case</div>
+
+        <div class="para">It has been more than 65 years since the Taman Shud case was first opened, but this notoriously bizarre murder mystery from Australia continues to baffle scientific investigators and crime aficionados from around the world today.</div>
+
+        <div class="para">On the morning of 1st December 1948, the body of an unidentified man was discovered propped against a rock wall on Somerton beach in Adelaide, opposite the Crippled Children's home. The man was around 40–45 years old, had an athletic figure and was dressed in a smart suit and tie. He had no form of ID on him and all the labels on his clothes had been removed. The only things found on his body were an unused 10:50 a.m. ticket from Adelaide Railway Station to Henley Beach for the 30th November, a packet of chewing gums, an aluminium comb, a packet of cigarettes, a box of Bryan &amp; May matches, sixpence and a small piece of paper with the words "Tamám shud" printed on it — which means "ended" or "finished" in Persian. To make matters more interesting, the autopsy revealed that his death had been unnatural, but determined no cause of death: although he had clearly died of heart failure, his heart had been healthy and no signs of violence or poisoning were discovered in his system.</div>
+
+        <div class="para">The case garnered media attention almost immediately, with dozens of people with missing friends and relatives travelling to Adelaide to have a look at the Somerton man's body — but none of them being able to positively identify him. The next piece of evidence came when a journalist named Frank Kennedy discovered that the piece of paper with the printed words had been ripped from the last page of <em>The Rubáiyát of Omar Khayyám</em>, a book of collected poems by Omar Khayyám, an 11th century Persian poet. Following pleas by the police for the public to check their copies of <em>The Rubáiyát</em> for any missing pages, a local man brought in the correct copy, which he reported having found in the back seat of his car six months earlier, around the time the corpse had been discovered.</div>
+
+        <div class="para">This is where things get even more complicated: in the back of the book, police discovered five lines of letters that appeared to be some sort of secret code. In the back cover, they also found a phone number which led them to a 27-year-old woman known as "Jestyn" who lived on Moseley Street, a stone's throw from the crime scene. Jestyn denied any knowledge of the man and was generally guarded and non-committal throughout the police interview. Nevertheless, the police decided not to pursue the lead. As for the code? Despite years of research by cryptology experts and students, no one has managed to crack it to this day.</div>
+
+        <div class="para">It's not just the mysterious code, however, that makes this case so popular with crime fans. It's been more than half a century since the man's death, but his identity is still a mystery. Although copies of the victim's fingerprints and photograph, as well as the name "T. Keane" (which was written on some labels found in his suitcase) were sent around the world to all Commonwealth countries, the search turned up no results. Some theories regarding the man's origins have arisen over the years, with many believing that he was American due to the predominantly US way the stripes slanted on his tie, his aluminium comb (rare in Australia at the time) and the belief that Americans were far more likely to chew gum than Australians in the 1940s. Others also theorise that he was Jestyn's lover, and perhaps even a Soviet spy agent — although this all still remains just speculation for now.</div>
+
+        <div class="para">Interest in the case was rekindled in 2013, following an interview on the show <em>60 Minutes</em> with Kate Thompson, the daughter of "Jestyn" — whose actual name was revealed to be Jo Thompson. Kate Thompson claimed that her mother had lied to the police about not knowing the Somerton Man. She also said her mother was a Soviet spy with a "dark side" and that she might've been responsible for the man's murder. Also participating in the show were Roma and Rachel Egan, wife and daughter respectively of Kate Thompson's late brother Robin, whom many believe to have been the Somerton man's son. The two women have backed a request to get the man's body exhumed in the interest of proving this claim, which they also believe to be correct. A similar bid had been rejected previously in 2011 by Attorney-General John Rau, citing insufficient "public interest reasons". There is currently a petition on Change.org, as well as an Indiegogo campaign to raise funds in support of solving the case.</div>
+      </div>
+    </div>
+
+    <div class="pane pane-right">
+      <div class="pane-inner">
+        <div class="sec-head">
+          <h2>Reading Passage 2 — Questions</h2>
+          <div class="range">Questions 15–28</div>
+        </div>
+
+        <div class="instructions"><strong>Questions 15–20.</strong> Complete the timeline below. Choose <strong>NO MORE THAN THREE WORDS</strong> from Reading Passage 2 for each answer.</div>
+        <div class="qgroup">
+          <div class="qline"><span class="qtext"><b>1948, Nov 30th</b> — The Somerton Man misses a train to <span class="qnum">15</span><input type="text" data-q="15"></span></div>
+          <div class="qline"><span class="qtext"><b>1948, Dec 1st</b> — The Somerton Man's body is discovered on Somerton beach</span></div>
+          <div class="qline"><span class="qtext"><b>1948, Dec 2nd</b> — Post mortem reveals no <span class="qnum">16</span><input type="text" data-q="16"></span></div>
+          <div class="qline"><span class="qtext"><b>1949, Jan 14th</b> — Adelaide Railway Station discover deceased man's suitcase</span></div>
+          <div class="qline"><span class="qtext"><b>1949, Jul 22nd</b> — A businessman from Somerton hands in copy of poem book that contains the <span class="qnum">17</span><input type="text" data-q="17"> and Jestyn's <span class="qnum">18</span><input type="text" data-q="18"></span></div>
+          <div class="qline"><span class="qtext"><b>1949, Jul 25th</b> — Police visit Jestyn at her house on <span class="qnum">19</span><input type="text" data-q="19"> to speak with her — she remains <span class="qnum">20</span><input type="text" data-q="20"> during questioning</span></div>
+        </div>
+
+        <div class="instructions"><strong>Questions 21–24.</strong> Complete each sentence with the correct ending, A–G.</div>
+        <div class="heading-list">
+          <div><b>A</b>believes her daughter is related to the Somerton man.</div>
+          <div><b>B</b>has tried to solve it for decades with no results.</div>
+          <div><b>C</b>was revealed by her daughter in 2013.</div>
+          <div><b>D</b>inadvertently assisted the police in their investigation.</div>
+          <div><b>E</b>was only named as "Jestyn".</div>
+          <div><b>F</b>remains a mystery.</div>
+          <div><b>G</b>revealed that Jo Thompson was a cruel Soviet spy.</div>
+        </div>
+        <div class="qgroup" id="qg-21-24"></div>
+
+        <div class="instructions"><strong>Questions 25–28.</strong> Choose the correct letter, A, B, C or D.</div>
+
+        <div class="qgroup">
+          <h3>25 — According to the autopsy on the Somerton man</h3>
+          <div class="options" data-q="25">
+            <label class="option"><input type="radio" name="q25" value="A"><span>A&nbsp; his heart failed for no reason.</span></label>
+            <label class="option"><input type="radio" name="q25" value="B"><span>B&nbsp; there were traces of poison in his system.</span></label>
+            <label class="option"><input type="radio" name="q25" value="C"><span>C&nbsp; he was physically fit.</span></label>
+            <label class="option"><input type="radio" name="q25" value="D"><span>D&nbsp; there was nothing wrong with his heart.</span></label>
+          </div>
+        </div>
+
+        <div class="qgroup">
+          <h3>26 — The copy of <em>The Rubáiyát of Omar Khayyám</em> with the missing page</h3>
+          <div class="options" data-q="26">
+            <label class="option"><input type="radio" name="q26" value="A"><span>A&nbsp; was discovered in a local man's garage.</span></label>
+            <label class="option"><input type="radio" name="q26" value="B"><span>B&nbsp; was in a local man's possession for six months after the murder.</span></label>
+            <label class="option"><input type="radio" name="q26" value="C"><span>C&nbsp; was discovered by a local man six months after the murder.</span></label>
+            <label class="option"><input type="radio" name="q26" value="D"><span>D&nbsp; was found by journalist Frank Kennedy.</span></label>
+          </div>
+        </div>
+
+        <div class="qgroup">
+          <h3>27 — One of the reasons many believe that the Somerton Man was American is that</h3>
+          <div class="options" data-q="27">
+            <label class="option"><input type="radio" name="q27" value="A"><span>A&nbsp; he wasn't found in any database in Commonwealth countries.</span></label>
+            <label class="option"><input type="radio" name="q27" value="B"><span>B&nbsp; he had been chewing a gum before his death.</span></label>
+            <label class="option"><input type="radio" name="q27" value="C"><span>C&nbsp; his tie had an American pattern of stripes.</span></label>
+            <label class="option"><input type="radio" name="q27" value="D"><span>D&nbsp; the name "T. Keane" was found in his suitcase.</span></label>
+          </div>
+        </div>
+
+        <div class="qgroup">
+          <h3>28 — Roma and Rachel Egan</h3>
+          <div class="options" data-q="28">
+            <label class="option"><input type="radio" name="q28" value="A"><span>A&nbsp; are critical of attempts to exhume the Somerton man's body.</span></label>
+            <label class="option"><input type="radio" name="q28" value="B"><span>B&nbsp; disagree that Robin Thompson was the Somerton man's son.</span></label>
+            <label class="option"><input type="radio" name="q28" value="C"><span>C&nbsp; backed the request that was rejected in 2011 by Rau.</span></label>
+            <label class="option"><input type="radio" name="q28" value="D"><span>D&nbsp; voiced their beliefs on the same programme as Kate Thompson.</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ READING PASSAGE 3 ============ -->
+  <section class="split" id="r3">
+    <div class="pane pane-left">
+      <div class="pane-inner">
+        <div class="passage-title">Reading Passage 3</div>
+        <div class="passage-heading">Coinage in Ancient Greece</div>
+
+        <div class="para"><span class="plabel">A</span>There are more than 170 official national currencies currently in circulation around the world — and while they may differ greatly in value, most show a high degree of commonality when it comes to their design. Typically, a coin or banknote will feature the effigy of a notable politician, monarch or other personality from the country of origin on one side and a recognisable state symbol (e.g. a building or an animal) on the reverse. This pattern, which has been around for more than 21 centuries, originated in ancient Greece.</div>
+
+        <div class="para"><span class="plabel">B</span>Prior to the invention of legal tender, most transactions in the ancient world took the form of trading a product or service for another. As sea trade grew in the Mediterranean, however, the once popular barter system became hard to maintain for two reasons: firstly, because it was tricky to calculate the value of each item or service in relation to another, and secondly, because carrying large goods (such as animals) on boats to do trade with neighbouring cities was difficult and inconvenient. Therefore, the need soon arose for a commonly recognised unit that would represent a set value — what is known today as a currency. As Aristotle explains in <em>Politics</em>, metal coins naturally became the most popular option due to the fact that they were easy to carry, and didn't run the risk of expiring. According to ancient Greek historian Herodotus, the first coins were invented in 620 BC in the town of Lydia, although some theorise that they actually originated in the city of Ionia. (Coins had already existed for nearly 400 years in China, unbeknownst to Europeans.)</div>
+
+        <div class="para"><span class="plabel">C</span>Much like with every other form of ancient Greek art, the history of ancient Greek coins can be divided into three distinct chronological periods: the Archaic (600–480 BC), the Classic (480–330 BC) and the Hellenistic Period (330–1st century BC). As ancient Greece was not a united country like today, but rather comprised of many independent city-states known as <em>poleis</em>, each state produced its own coins. The island of Aegina was the first to mint silver coins, perhaps adopting the new system upon witnessing how successfully it had facilitated trade for the Ionians. Aegina being the head of a confederation of seven states, it quickly influenced other city-states in the Mediterranean and the new method of trade soon became widespread. Up until approximately 510 BC, when Athens began producing its own coin, the Aegina coin — which featured a turtle on its surface — was the most predominant in the region.</div>
+
+        <div class="para"><span class="plabel">D</span>The tetradrachm, Athens's new coin bearing the picture of an owl on its obverse as a tribute to the city's protector, the goddess Athena, brought with it a shift in the world of coinage. Prior to the tetradrachm, Athenians had been using simple iron rods known as 'obols' for currency. As the average human hand could grasp about six obols, that number soon came to represent a 'drachma' (from the Greek verb 'dratto', which means 'to grasp') — so the new tetradrachm had the same value as 24 obols. With Athens continually growing in power, the tetradrachm soon replaced the Aegina 'turtle' as the most preponderant coin in the region. It was around that time that an agreement akin to way the EU's euro currency functions also appeared, with different coins from all over the Mediterranean being made to the same standards as the Athenian coin (albeit with each city's own symbols on them) and being used interchangeably among the trading city-states.</div>
+
+        <div class="para"><span class="plabel">E</span>Coinage soon spread beyond those city-states. Romans abandoned the bronze bars they'd been using in favour of coins around the year 300 BC, and Alexander the Great and his father King Philip of Macedonia began to produce massive quantities of coins to fund their military escapades around the same time. It was with the death of the latter, in 336 BC, that the Hellenistic Period began. Two things characterise the Hellenistic Period: the introduction of a "type" (the design that coins were stamped with) on the reverse of the coins, and mass production, which mostly took place in kingdoms beyond the Greek city-states, such as Egypt, Syria and the far east. Another new feature, which was heavily criticised by the Greeks, was the introduction of profiles of kings and other important living figures as stamps in lieu of the traditional symbols of animals and buildings. Athens, still a powerful city at the time, eschewed these designs and continued to produce its own tetradrachm coins, even introducing a new-style coin characterised by broad, thin flans — a design which became popular across the Aegean and lasted until the spread of Roman rule over Greece.</div>
+
+        <div class="para"><span class="plabel">F</span>It's not difficult to see why ancient Greek coins continue to fascinate coin collectors and historians today. They marked the beginning of a new era in business and introduced a model of trade in Europe that is still present nowadays; they greatly influenced the design of modern coinage, with symbols such as the owl (which can be seen on the Greek version of the euro today) and portraits of important personalities; and, since they were hand-made to high technical standards representative of ancient Greek perfectionism, many are even remarkable in their own right, as tiny metal works of art.</div>
+      </div>
+    </div>
+
+    <div class="pane pane-right">
+      <div class="pane-inner">
+        <div class="sec-head">
+          <h2>Reading Passage 3 — Questions</h2>
+          <div class="range">Questions 29–40</div>
+        </div>
+
+        <div class="instructions"><strong>Questions 29–34.</strong> The reading passage has six paragraphs, A–F. Choose the correct heading for paragraphs A–F from the list of headings below.</div>
+        <div class="heading-list">
+          <div><b>i</b>The beginning of the Archaic period</div>
+          <div><b>ii</b>The Athenian obol replaces the turtle</div>
+          <div><b>iii</b>How product exchange became insufficient</div>
+          <div><b>iv</b>Roman and Macedonian coins</div>
+          <div><b>v</b>The relevance of ancient Greek coins today</div>
+          <div><b>vi</b>New cities introduce new design rules</div>
+          <div><b>vii</b>A precursor of the modern euro</div>
+          <div><b>viii</b>The difference between Ionian and Lydian coins</div>
+          <div><b>ix</b>Modern coin designs and their origin</div>
+        </div>
+        <div class="qgroup" id="qg-29-34"></div>
+
+        <div class="instructions"><strong>Questions 35–38.</strong> Answer the questions below using <strong>NO MORE THAN TWO WORDS</strong> taken from Reading Passage 3.</div>
+        <div class="qgroup">
+          <div class="qline"><span class="qnum">35</span><span class="qtext">What were the ancient Greek city-states commonly known as?</span><input type="text" data-q="35"></div>
+          <div class="qline"><span class="qnum">36</span><span class="qtext">Which type did the Aegina coin use?</span><input type="text" data-q="36"></div>
+          <div class="qline"><span class="qnum">37</span><span class="qtext">What was the value of a drachma in ancient Athens?</span><input type="text" data-q="37"></div>
+          <div class="qline"><span class="qnum">38</span><span class="qtext">What did the Romans use prior to the introduction of coins?</span><input type="text" data-q="38"></div>
+        </div>
+
+        <div class="instructions"><strong>Questions 39–40.</strong> Choose the correct letter, A, B, C or D.</div>
+
+        <div class="qgroup">
+          <h3>39 — The Athenian Hellenistic-period tetradrachm coin</h3>
+          <div class="options" data-q="39">
+            <label class="option"><input type="radio" name="q39" value="A"><span>A&nbsp; replaced the owl type with the profile of a king.</span></label>
+            <label class="option"><input type="radio" name="q39" value="B"><span>B&nbsp; was a thin, wide metal disk.</span></label>
+            <label class="option"><input type="radio" name="q39" value="C"><span>C&nbsp; remained popular under Roman rule.</span></label>
+            <label class="option"><input type="radio" name="q39" value="D"><span>D&nbsp; was massively produced in Syria and Egypt.</span></label>
+          </div>
+        </div>
+
+        <div class="qgroup">
+          <h3>40 — Ancient Greek coins</h3>
+          <div class="options" data-q="40">
+            <label class="option"><input type="radio" name="q40" value="A"><span>A&nbsp; are still a method of trade in Europe nowadays.</span></label>
+            <label class="option"><input type="radio" name="q40" value="B"><span>B&nbsp; are remarkably different from modern coins.</span></label>
+            <label class="option"><input type="radio" name="q40" value="C"><span>C&nbsp; are a fine example of ancient Greek art.</span></label>
+            <label class="option"><input type="radio" name="q40" value="D"><span>D&nbsp; were a tribute to the goddess Athena, protector of Athens.</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WRITING TASK 1 ============ -->
+  <section class="split" id="w1">
+    <div class="pane pane-left">
+      <div class="pane-inner">
+        <div class="passage-title">Writing Task 1</div>
+        <div class="passage-heading">Bakery sales by branch</div>
+        <div class="task-meta">You should spend about 20 minutes on this task.</div>
+
+        <div class="prompt-box">
+          <p>The table below gives information about a bakery's average sales in three different branches in 2015.</p>
+          <p><em>Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</em></p>
+          <p style="margin-bottom:0;">You should write <strong>at least 150 words</strong>.</p>
+        </div>
+
+        <table class="data-table">
+          <tr><th>Average</th><th>London<br>Covent Garden</th><th>London<br>Oxford Circus</th><th>London<br>St John's Wood</th></tr>
+          <tr><td>Number of Transactions</td><td>642</td><td>538</td><td>269</td></tr>
+          <tr><td>Transaction Value</td><td>£7.58</td><td>£4.51</td><td>£5.01</td></tr>
+          <tr><td>Number of Eat-in Transactions</td><td>304</td><td>247</td><td>150</td></tr>
+          <tr><td>Number of Take-Away Transactions</td><td>338</td><td>291</td><td>119</td></tr>
+          <tr><td>Most Popular Item</td><td>Croissant</td><td>Medium latte</td><td>Strawberry tart</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="pane pane-right">
+      <div class="pane-inner">
+        <div class="sec-head"><h2>Your response</h2><div class="range">Task 1 · minimum 150 words</div></div>
+        <div class="word-count"><span>Write your answer below</span><span class="count" id="wc1">0 words</span></div>
+        <textarea class="essay" id="essay1" placeholder="Start writing your Task 1 response here…"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WRITING TASK 2 ============ -->
+  <section class="split" id="w2">
+    <div class="pane pane-left">
+      <div class="pane-inner">
+        <div class="passage-title">Writing Task 2</div>
+        <div class="passage-heading">Climate change responsibility</div>
+        <div class="task-meta">You should spend about 40 minutes on this task.</div>
+
+        <div class="prompt-box">
+          <p><em>Some people think that developed countries have a higher responsibility to combat climate change than developing countries. Others believe that all countries should have the same responsibilities towards protecting the environment.</em></p>
+          <p>Discuss both these views and give your own opinion.</p>
+          <p>Give reasons for your answer and include any relevant examples from your own knowledge or experience.</p>
+          <p style="margin-bottom:0;">You should write <strong>at least 250 words</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pane pane-right">
+      <div class="pane-inner">
+        <div class="sec-head"><h2>Your response</h2><div class="range">Task 2 · minimum 250 words</div></div>
+        <div class="word-count"><span>Write your answer below</span><span class="count" id="wc2">0 words</span></div>
+        <textarea class="essay" id="essay2" placeholder="Start writing your Task 2 response here…"></textarea>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="status-banner" id="statusBanner"></div>
+
+<script>
+  // ----------------------------------------------------------------
+  // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE.
+  // Deploy a script bound to your Sheet with a doPost(e) function that
+  // appends JSON.parse(e.postData.contents) as a row (any keys work).
+  // ----------------------------------------------------------------
+  const SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+
+  // ---------- build the select-based question groups ----------
+  function buildSelectGroup(containerId, questions, options, placeholder){
+    const el = document.getElementById(containerId);
+    questions.forEach(qn => {
+      const line = document.createElement('div');
+      line.className = 'qline';
+      const label = document.createElement('span');
+      label.className = 'qnum';
+      label.textContent = qn.num;
+      const text = document.createElement('span');
+      text.className = 'qtext';
+      text.textContent = qn.text;
+      const select = document.createElement('select');
+      select.className = 'qselect';
+      select.dataset.q = qn.num;
+      const optDefault = document.createElement('option');
+      optDefault.value = '';
+      optDefault.textContent = placeholder;
+      select.appendChild(optDefault);
+      options.forEach(o => {
+        const opt = document.createElement('option');
+        opt.value = o;
+        opt.textContent = o;
+        select.appendChild(opt);
+      });
+      select.addEventListener('change', () => {
+        select.classList.toggle('answered', !!select.value);
+        updateProgress();
+      });
+      line.appendChild(label);
+      line.appendChild(text);
+      line.appendChild(select);
+      el.appendChild(line);
+    });
+  }
+
+  buildSelectGroup('qg-1-7', [
+    {num:1, text:'some of the disadvantages related to synaesthesia'},
+    {num:2, text:"what scientists think about synaesthesia's real-life usefulness"},
+    {num:3, text:'a prediction for the future of synaesthesia'},
+    {num:4, text:'an example of how grapheme–colour synaesthesia works'},
+    {num:5, text:'a brief history of synaesthesia'},
+    {num:6, text:'some of the various different types of synaesthesia'},
+    {num:7, text:"information about a study that suggests synaesthetic symptoms aren't arbitrary"}
+  ], ['A','B','C','D','E','F','G'], 'Choose paragraph…');
+
+  buildSelectGroup('qg-8-11', [
+    {num:8, text:'There are 60 different types of synaesthesia.'},
+    {num:9, text:"Before Professor Simon Baron-Cohen's research, synaesthesia was thought to be a myth."},
+    {num:10, text:'A lot of celebrities are affected by synaesthesia.'},
+    {num:11, text:'Most scientists believe that synaesthesia runs in families.'}
+  ], ['TRUE','FALSE','NOT GIVEN'], 'Choose…');
+
+  buildSelectGroup('qg-21-24', [
+    {num:21, text:'The code written on the back of The Rubáiyát of Omar Khayyám'},
+    {num:22, text:'Journalist Frank Kennedy'},
+    {num:23, text:'The identity of the woman to whom the phone number belonged'},
+    {num:24, text:"Kate Thompson's sister-in-law"}
+  ], ['A','B','C','D','E','F','G'], 'Choose ending…');
+
+  buildSelectGroup('qg-29-34', [
+    {num:29, text:'Paragraph A'},
+    {num:30, text:'Paragraph B'},
+    {num:31, text:'Paragraph C'},
+    {num:32, text:'Paragraph D'},
+    {num:33, text:'Paragraph E'},
+    {num:34, text:'Paragraph F'}
+  ], ['i','ii','iii','iv','v','vi','vii','viii','ix'], 'Choose heading…');
+
+  // ---------- tab navigation ----------
+  const tabs = document.querySelectorAll('.tab');
+  const splits = document.querySelectorAll('.split');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      splits.forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.target).classList.add('active');
+      document.querySelector(`#${tab.dataset.target} .pane`).scrollTop = 0;
+    });
+  });
+
+  // ---------- radio/option highlighting ----------
+  document.querySelectorAll('.option').forEach(opt => {
+    const input = opt.querySelector('input');
+    input.addEventListener('change', () => {
+      const name = input.name;
+      document.querySelectorAll(`input[name="${name}"]`).forEach(i => {
+        i.closest('.option').classList.toggle('checked', i.checked);
+      });
+      updateProgress();
+    });
+  });
+
+  document.querySelectorAll('input[type=text]').forEach(inp => {
+    inp.addEventListener('input', updateProgress);
+  });
+
+  // ---------- word counters ----------
+  function wordCount(str){
+    const t = str.trim();
+    return t.length ? t.split(/\s+/).length : 0;
+  }
+  function setupCounter(taId, countId, minWords){
+    const ta = document.getElementById(taId);
+    const cEl = document.getElementById(countId);
+    ta.addEventListener('input', () => {
+      const n = wordCount(ta.value);
+      cEl.textContent = n + ' words';
+      cEl.className = 'count ' + (n >= minWords ? 'ok' : 'low');
+      updateProgress();
+    });
+  }
+  setupCounter('essay1','wc1',150);
+  setupCounter('essay2','wc2',250);
+
+  // ---------- progress + tab dots ----------
+  const READING_TOTAL = 40;
+  function collectReadingAnswers(){
+    const answers = {};
+    for(let i=1;i<=40;i++) answers['q'+i] = '';
+    document.querySelectorAll('input[type=text][data-q]').forEach(el => {
+      answers['q'+el.dataset.q] = el.value.trim();
+    });
+    document.querySelectorAll('select.qselect[data-q]').forEach(el => {
+      answers['q'+el.dataset.q] = el.value;
+    });
+    [25,26,27,28,39,40].forEach(n => {
+      const checked = document.querySelector(`input[name="q${n}"]:checked`);
+      answers['q'+n] = checked ? checked.value : '';
+    });
+    return answers;
+  }
+
+  function sectionAnsweredCount(range){
+    const answers = collectReadingAnswers();
+    let c = 0;
+    for(let i=range[0]; i<=range[1]; i++) if (answers['q'+i]) c++;
+    return c;
+  }
+
+  function updateProgress(){
+    const answers = collectReadingAnswers();
+    let total = 0;
+    for(let i=1;i<=READING_TOTAL;i++) if (answers['q'+i]) total++;
+    document.getElementById('testStatus').textContent = total + ' / ' + READING_TOTAL + ' reading answered';
+
+    const ranges = {r1:[1,14], r2:[15,28], r3:[29,40]};
+    Object.keys(ranges).forEach(id => {
+      const [a,b] = ranges[id];
+      const c = sectionAnsweredCount([a,b]);
+      const tab = document.querySelector(`.tab[data-target="${id}"]`);
+      tab.classList.toggle('done', c === (b-a+1));
+    });
+
+    const w1 = wordCount(document.getElementById('essay1').value);
+    const w2 = wordCount(document.getElementById('essay2').value);
+    document.querySelector('.tab[data-target="w1"]').classList.toggle('done', w1 >= 150);
+    document.querySelector('.tab[data-target="w2"]').classList.toggle('done', w2 >= 250);
+  }
+
+  // ---------- submit ----------
+  document.getElementById('submitBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('submitBtn');
+    const banner = document.getElementById('statusBanner');
+    const answers = collectReadingAnswers();
+    const payload = {
+      timestamp: new Date().toISOString(),
+      ...answers,
+      essay1_task1: document.getElementById('essay1').value.trim(),
+      essay1_wordcount: wordCount(document.getElementById('essay1').value),
+      essay2_task2: document.getElementById('essay2').value.trim(),
+      essay2_wordcount: wordCount(document.getElementById('essay2').value)
+    };
+
+    if (SCRIPT_URL.indexOf('PASTE_YOUR') !== -1) {
+      banner.className = 'status-banner err';
+      banner.textContent = "This form isn't connected to a Google Sheet yet — set SCRIPT_URL in the page. Your answers are shown below so you don't lose them: " + JSON.stringify(payload);
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      banner.className = 'status-banner ok';
+      banner.textContent = 'Submitted. Your reading answers and essays have been sent to the Google Sheet.';
+      btn.textContent = 'Submitted';
+    } catch (e) {
+      banner.className = 'status-banner err';
+      banner.textContent = "Something went wrong sending your answers. Here they are so you don't lose them: " + JSON.stringify(payload);
+      btn.disabled = false;
+      btn.textContent = 'Submit test';
+    }
+  });
+
+  updateProgress();
+</script>
+</body>
+</html>
